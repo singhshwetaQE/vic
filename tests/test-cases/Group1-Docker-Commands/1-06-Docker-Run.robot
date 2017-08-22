@@ -160,6 +160,7 @@ Docker run and auto remove
     Length Should Be  ${output}  ${count}
 
 Docker run and auto remove with anonymous volumes and named volumes
+<<<<<<< 62eec3f7bd78a8a2af5ed0f112ce1f73218a0500
        ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} ps -a
        Should Be Equal As Integers  ${rc}  0
        ${output}=  Split To Lines  ${output}
@@ -178,6 +179,26 @@ Docker run and auto remove with anonymous volumes and named volumes
        Should Contain  ${output}  ${namedImageVol}
 
 
+=======
+    ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} ps -a
+    Should Be Equal As Integers  ${rc}  0
+    ${output}=  Split To Lines  ${output}
+    ${count}=  Get Length  ${output}
+    ${suffix}=  Evaluate  '%{DRONE_BUILD_NUMBER}-' + str(random.randint(1000,9999))  modules=random
+    Set Test Variable  ${namedImageVol}  non-anonymous-image-volume-${suffix}
+    Should Be Equal As Integers  ${rc}  0
+    Set Test Variable  ${imageVolumeContainer}  I-Have-Two-Anonymous-Volumes-${suffix}
+    ${rc}  ${c5}=  Run And Return Rc And Output  docker %{VCH-PARAMS} run --rm --name ${imageVolumeContainer} -v ${namedImageVol}:/data/db -v /I/AM/ANONYMOOOOSE mongo bash
+    Should Be Equal As Integers  ${rc}  0
+    ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} ps -a
+    Should Be Equal As Integers  ${rc}  0
+    ${output}=  Split To Lines  ${output}
+    Length Should Be  ${output}  ${count}
+    ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} volume ls
+    Should Contain  ${output}  ${namedImageVol}
+
+           
+>>>>>>> [specific ci=Group1-Docker-Commands] Mask lost+found folder in volumes and untangle transitive imports (#6050)
 Docker run mysql container
     ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} run -d -v vol:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=pw --name test-mysql mysql
     Should Be Equal As Integers  ${rc}  0

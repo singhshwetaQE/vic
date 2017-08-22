@@ -37,7 +37,10 @@ import (
 
 	"github.com/vmware/vic/lib/config/executor"
 	"github.com/vmware/vic/lib/system"
+<<<<<<< 62eec3f7bd78a8a2af5ed0f112ce1f73218a0500
 	"github.com/vmware/vic/lib/tether/msgs"
+=======
+>>>>>>> [specific ci=Group1-Docker-Commands] Mask lost+found folder in volumes and untangle transitive imports (#6050)
 	"github.com/vmware/vic/lib/tether/shared"
 	"github.com/vmware/vic/pkg/dio"
 	"github.com/vmware/vic/pkg/log/syslog"

@@ -38,7 +38,10 @@ import (
 	"github.com/vmware/govmomi/toolbox/hgfs"
 	"github.com/vmware/govmomi/toolbox/vix"
 	"github.com/vmware/vic/lib/archive"
+<<<<<<< 62eec3f7bd78a8a2af5ed0f112ce1f73218a0500
 	"github.com/vmware/vic/lib/tether/msgs"
+=======
+>>>>>>> [specific ci=Group1-Docker-Commands] Mask lost+found folder in volumes and untangle transitive imports (#6050)
 	"github.com/vmware/vic/lib/tether/shared"
 	"github.com/vmware/vic/pkg/trace"
 )
@@ -296,7 +299,11 @@ func toolboxOverrideArchiveRead(system System, u *url.URL, tr *tar.Reader) error
 			return err
 		}
 
+<<<<<<< 62eec3f7bd78a8a2af5ed0f112ce1f73218a0500
 		diskPath, err := mountDiskLabel(op, system, diskLabel)
+=======
+		diskPath, err := mountDiskLabel(op, diskLabel)
+>>>>>>> [specific ci=Group1-Docker-Commands] Mask lost+found folder in volumes and untangle transitive imports (#6050)
 		if err != nil {
 			op.Errorf(err.Error())
 			return err
@@ -349,7 +356,11 @@ func toolboxOverrideArchiveWrite(system System, u *url.URL, tw *tar.Writer) erro
 		}
 
 		// get the container fs mount
+<<<<<<< 62eec3f7bd78a8a2af5ed0f112ce1f73218a0500
 		diskPath, err := mountDiskLabel(op, system, diskLabel)
+=======
+		diskPath, err := mountDiskLabel(op, diskLabel)
+>>>>>>> [specific ci=Group1-Docker-Commands] Mask lost+found folder in volumes and untangle transitive imports (#6050)
 		if err != nil {
 			op.Errorf(err.Error())
 			return err
@@ -407,7 +418,11 @@ func toolboxOverrideArchiveWrite(system System, u *url.URL, tw *tar.Writer) erro
 	return defaultArchiveHandler.Write(u, tw)
 }
 
+<<<<<<< 62eec3f7bd78a8a2af5ed0f112ce1f73218a0500
 func mountDiskLabel(op trace.Operation, system System, label string) (string, error) {
+=======
+func mountDiskLabel(op trace.Operation, label string) (string, error) {
+>>>>>>> [specific ci=Group1-Docker-Commands] Mask lost+found folder in volumes and untangle transitive imports (#6050)
 	// We know the vmdk will always be attached at '/'
 	if label == "containerfs" {
 		return "/", nil
@@ -420,7 +435,11 @@ func mountDiskLabel(op trace.Operation, system System, label string) (string, er
 		return "", fmt.Errorf("failed to create mountpoint %s: %s", tmpDir, err)
 	}
 
+<<<<<<< 62eec3f7bd78a8a2af5ed0f112ce1f73218a0500
 	err = system.MountLabel(op, label, tmpDir)
+=======
+	err = baseOp.MountLabel(op, label, tmpDir)
+>>>>>>> [specific ci=Group1-Docker-Commands] Mask lost+found folder in volumes and untangle transitive imports (#6050)
 	if err != nil {
 		os.Remove(tmpDir)
 		op.Errorf("failed to mount label %s at %s: %s", label, tmpDir, err)
