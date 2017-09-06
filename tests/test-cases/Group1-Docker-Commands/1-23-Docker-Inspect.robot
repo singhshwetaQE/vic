@@ -18,6 +18,7 @@ Resource  ../../resources/Util.robot
 Suite Setup  Conditional Install VIC Appliance To Test Server
 Suite Teardown  Cleanup VIC Appliance On Test Server
 Test Timeout  20 minutes
+<<<<<<< 1e61e2aa78b11a52919dbe1c885a8c2c05583c09
 
 *** Keywords ***
 Get container inspect status
@@ -25,6 +26,8 @@ Get container inspect status
     ${rc}  ${status}=  Run And Return Rc And Output  docker %{VCH-PARAMS} inspect ${container} -f '{{.State.Status}}'
     Should Be Equal As Integers  ${rc}  0
     [Return]  ${status}
+=======
+>>>>>>> Add a test timeout within the drone timeout limit (#6212)
 
 *** Test Cases ***
 Simple docker inspect of image

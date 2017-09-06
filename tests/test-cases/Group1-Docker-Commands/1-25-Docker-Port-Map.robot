@@ -18,6 +18,7 @@ Resource  ../../resources/Util.robot
 Suite Setup  Conditional Install VIC Appliance To Test Server
 Suite Teardown  Cleanup VIC Appliance On Test Server
 Test Timeout  20 minutes
+<<<<<<< 1e61e2aa78b11a52919dbe1c885a8c2c05583c09
 
 *** Keyword ***
 Check For Container Event
@@ -27,6 +28,8 @@ Check For Container Event
     ${rc}  ${events}=  Run And Return Rc And Output  docker %{VCH-PARAMS} events --since=${since} --filter container=${name} --format='Status={{.Status}}' --until=${until}
     Should Be Equal As Integers  ${rc}  0
     Should Contain  ${events}  ${event}
+=======
+>>>>>>> Add a test timeout within the drone timeout limit (#6212)
 
 *** Test Cases ***
 Create container with port mappings

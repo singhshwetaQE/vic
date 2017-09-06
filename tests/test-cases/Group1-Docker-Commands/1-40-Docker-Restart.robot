@@ -17,7 +17,11 @@ Documentation   Test 1-40 - Docker Restart
 Resource        ../../resources/Util.robot
 Suite Setup  Conditional Install VIC Appliance To Test Server
 Suite Teardown  Cleanup VIC Appliance On Test Server
+<<<<<<< 1e61e2aa78b11a52919dbe1c885a8c2c05583c09
 Test Timeout  30 minutes
+=======
+Test Timeout  20 minutes
+>>>>>>> Add a test timeout within the drone timeout limit (#6212)
 
 *** Keywords ***
 

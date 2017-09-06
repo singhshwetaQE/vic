@@ -18,6 +18,7 @@ Resource  ../../resources/Util.robot
 Suite Setup  Conditional Install VIC Appliance To Test Server
 Suite Teardown  Cleanup VIC Appliance On Test Server
 Test Timeout  20 minutes
+<<<<<<< 1e61e2aa78b11a52919dbe1c885a8c2c05583c09
 
 *** Keywords ***
 Verify Poweroff During Exec Error Message
@@ -55,6 +56,8 @@ Verify LS Output For Busybox
        Should Contain  ${output}  tmp
        Should Contain  ${output}  usr
        Should Contain  ${output}  var
+=======
+>>>>>>> Add a test timeout within the drone timeout limit (#6212)
 
 *** Test Cases ***
 Exec -d
