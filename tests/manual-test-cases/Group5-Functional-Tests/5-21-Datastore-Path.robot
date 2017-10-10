@@ -24,7 +24,10 @@ ${dsScheme}=  ds://
 
 *** Keywords ***
 Setup Suite ESX
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
+=======
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     ${esx1}  ${esx1-ip}=  Deploy Nimbus ESXi Server  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}
     Set Suite Variable  ${ESX1}  ${esx1}

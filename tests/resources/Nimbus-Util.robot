@@ -198,7 +198,11 @@ Deploy Nimbus Testbed
     Wait Until Keyword Succeeds  2 min  30 sec  Login  ${user}  ${password}
 
     :FOR  ${IDX}  IN RANGE  1  5
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     \   ${out}=  Execute Command  ${NIMBUS_LOCATION} nimbus-testbeddeploy --lease 0.25 ${testbed}
+=======
+    \   ${out}=  Execute Command  nimbus-testbeddeploy --lease=1 ${testbed}
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     \   Log  ${out}
     \   # Make sure the deploy actually worked
     \   ${status}=  Run Keyword And Return Status  Should Contain  ${out}  "deployment_result"=>"PASS"
@@ -211,7 +215,11 @@ Kill Nimbus Server
     [Arguments]  ${user}  ${password}  ${name}
     Open Connection  %{NIMBUS_GW}
     Wait Until Keyword Succeeds  2 min  30 sec  Login  ${user}  ${password}
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     ${out}=  Execute Command  ${NIMBUS_LOCATION} nimbus-ctl kill ${name}
+=======
+    ${out}=  Execute Command  nimbus-ctl kill ${name}
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Log  ${out}
     Close connection
 
@@ -242,10 +250,16 @@ Gather Host IPs
 
 Create a VSAN Cluster
     [Arguments]  ${name}=vic-vmotion
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
     Log To Console  \nStarting basic VSAN cluster deploy...
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     ${out}=  Deploy Nimbus Testbed  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}  --plugin testng --lease 0.25 --noStatsDump --noSupportBundles --vcvaBuild ${VC_VERSION} --esxPxeDir ${ESX_VERSION} --esxBuild ${ESX_VERSION} --testbedName vcqa-vsan-simple-pxeBoot-vcva --runName ${name}
+=======
+    Log To Console  \nStarting basic VSAN cluster deploy...
+    Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
+    ${out}=  Deploy Nimbus Testbed  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}  --plugin testng --lease 1 --noStatsDump --noSupportBundles --vcvaBuild ${VC_VERSION} --esxPxeDir ${ESX_VERSION} --esxBuild ${ESX_VERSION} --testbedName vcqa-vsan-simple-pxeBoot-vcva --runName ${name}
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Should Contain  ${out}  .vcva-${VC_VERSION}' is up. IP:
     ${out}=  Split To Lines  ${out}
     :FOR  ${line}  IN  @{out}

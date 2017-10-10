@@ -20,7 +20,10 @@ Suite Teardown  Run Keyword And Ignore Error  Nimbus Cleanup  ${list}
 
 *** Keywords ***
 Invalid ESXi Install Setup
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
+=======
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     Set Suite Variable  ${datacenter}  datacenter1
     Set Suite Variable  ${cluster}  cls

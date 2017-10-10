@@ -21,10 +21,16 @@ Test Teardown  Cleanup VIC Appliance On Test Server
 
 *** Keywords ***
 Multiple VLAN Setup
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     ${esx1}  ${esx2}  ${esx3}  ${vc}  ${esx1-ip}  ${esx2-ip}  ${esx3-ip}  ${vc-ip}=  Create a Simple VC Cluster  multi-vlan-1  cls
     Set Suite Variable  @{list}  ${esx1}  ${esx2}  ${esx3}  %{NIMBUS_USER}-${vc}
+=======
+    Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
+    ${esx1}  ${esx2}  ${esx3}  ${vc}  ${esx1-ip}  ${esx2-ip}  ${esx3-ip}  ${vc-ip}=  Create a Simple VC Cluster  multi-vlan-1  cls
+    Set Suite Variable  @{list}  ${esx1}  ${esx2}  ${esx3}  ${vc}
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
 
 *** Test Cases ***
 Test1

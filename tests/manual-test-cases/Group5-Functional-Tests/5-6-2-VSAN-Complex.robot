@@ -20,7 +20,10 @@ Suite Teardown  Run Keyword And Ignore Error  Nimbus Cleanup  ${list}
 
 *** Keywords ***
 VSAN Complex Setup
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
+=======
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     ${name}=  Evaluate  'vic-vsan-complex-' + str(random.randint(1000,9999))  modules=random
     Set Suite Variable  ${user}  %{NIMBUS_USER}
@@ -65,12 +68,18 @@ Complex VSAN
     Log  ${out}
     Should Be Empty  ${out}
 
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     Custom Testbed Keepalive  /dbc/pa-dbc1111/mhagen
 
+=======
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Install VIC Appliance To Test Server
     Run Regression Tests
     Cleanup VIC Appliance On Test Server
 
     ${out}=  Run  govc datastore.vsan.dom.ls -ds %{TEST_DATASTORE} -l -o
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     Log  ${out}
+=======
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Should Be Empty  ${out}

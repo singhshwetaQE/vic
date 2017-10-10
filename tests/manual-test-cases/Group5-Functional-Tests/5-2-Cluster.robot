@@ -20,7 +20,10 @@ Suite Teardown  Run Keyword And Ignore Error  Nimbus Cleanup  ${list}
 
 *** Keywords ***
 Cluster Setup
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
+=======
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Log To Console  \nWait until Nimbus is at least available...
     Open Connection  %{NIMBUS_GW}
     Wait Until Keyword Succeeds  10 min  30 sec  Login  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}
@@ -33,7 +36,11 @@ Cluster Setup
     @{esx_names}=  Get Dictionary Keys  ${esxes}
     @{esx_ips}=  Get Dictionary Values  ${esxes}
 
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     Set Suite Variable  @{list}  @{esx_names}[0]  @{esx_names}[1]  @{esx_names}[2]  %{NIMBUS_USER}-${vc}
+=======
+    Set Suite Variable  @{list}  %{NIMBUS_USER}-@{esx_names}[0]  %{NIMBUS_USER}-@{esx_names}[1]  %{NIMBUS_USER}-@{esx_names}[2]  %{NIMBUS_USER}-${vc}
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
 
     # Finish vCenter deploy
     ${output}=  Wait For Process  ${pid}

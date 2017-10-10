@@ -16,8 +16,13 @@
 Documentation  Test 5-22 - NFS Volume
 Resource  ../../resources/Util.robot
 Suite Setup  Wait Until Keyword Succeeds  10x  10m  Setup ESX And NFS Suite
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
 Suite Teardown  Run Keyword And Ignore Error  NFS Volume Cleanup
 Test Teardown  Gather NFS Logs
+=======
+Suite Teardown  Run Keyword And Ignore Error  Nimbus Cleanup  ${list}
+
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
 
 *** Variables ***
 ${nfsVolumeStore}=  nfsVolumeStore
@@ -34,11 +39,15 @@ ${mntNamed}=  /mnt/named
 
 *** Keywords ***
 Setup ESX And NFS Suite
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
+=======
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     Log To Console  \nStarting test...
 
     ${esx1}  ${esx1_ip}=  Deploy Nimbus ESXi Server  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     Open Connection  %{NIMBUS_GW}
     Wait Until Keyword Succeeds  2 min  30 sec  Login  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}
     ${POD}=  Fetch POD  ${esx1}
@@ -50,11 +59,20 @@ Setup ESX And NFS Suite
     ${nfs_readonly}  ${nfs_readonly_ip}=  Deploy Nimbus NFS Datastore  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}  additional-args=--disk 5000000 --disk 5000000 --mountOpt ro --nfsOpt ro --mountPoint=storage1 --mountPoint=storage2 --nimbus ${POD}
 
     Set Suite Variable  @{list}  ${esx1}  ${nfs}  ${nfs_readonly}
+=======
+
+    ${nfs}  ${nfs_ip}=  Deploy Nimbus NFS Datastore  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}
+
+    ${nfs_readonly}  ${nfs_readonly_ip}=  Deploy Nimbus NFS Datastore  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}  additional-args=--disk 5000000 --disk 5000000 --mountOpt ro --nfsOpt ro --mountPoint=storage1 --mountPoint=storage2
+
+    Set Suite Variable  @{list}  ${esx1}  ${nfs}
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Set Suite Variable  ${ESX1}  ${esx1}
     Set Suite Variable  ${ESX1_IP}  ${esx1_ip}
     Set Suite Variable  ${NFS_IP}  ${nfs_ip}
     Set Suite Variable  ${NFS}  ${nfs}
     Set Suite Variable  ${NFS_READONLY_IP}  ${nfs_readonly_ip}
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
 
     # Add the NFS servers to SSH known host list
     ${out}=  Run Keyword And Ignore Error  Run  sshpass -p %{DEPLOYED_PASSWORD} ssh -o StrictHostKeyChecking\=no root@${NFS_IP} exit
@@ -75,6 +93,8 @@ Setup ESX And NFS Suite
     ${out}=  Execute Command   rpcdebug -m rpc -s all
     ${out}=  Execute Command   service rpcbind restart
     Close Connection
+=======
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
 
 Setup ENV Variables for VIC Appliance Install
     Log To Console  \nSetup Environment Variables for VIC Appliance To ESX\n

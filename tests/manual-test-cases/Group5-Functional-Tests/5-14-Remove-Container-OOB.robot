@@ -20,10 +20,16 @@ Suite Teardown  Run Keyword And Ignore Error  Nimbus Cleanup  ${list}
 
 *** Keywords ***
 Remove Container OOB Setup
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     ${esx1}  ${esx2}  ${esx3}  ${vc}  ${esx1-ip}  ${esx2-ip}  ${esx3-ip}  ${vc-ip}=  Create a Simple VC Cluster
     Set Suite Variable  @{list}  ${esx1}  ${esx2}  ${esx3}  %{NIMBUS_USER}-${vc}
+=======
+    Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
+    ${esx1}  ${esx2}  ${esx3}  ${vc}  ${esx1-ip}  ${esx2-ip}  ${esx3-ip}  ${vc-ip}=  Create a Simple VC Cluster
+    Set Suite Variable  @{list}  ${esx1}  ${esx2}  ${esx3}  ${vc}
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
 
 *** Test Cases ***
 Docker run an image from a container that was removed OOB

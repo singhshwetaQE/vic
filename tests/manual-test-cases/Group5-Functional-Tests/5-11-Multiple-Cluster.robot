@@ -29,7 +29,10 @@ Combine Dictionaries
     [Return]  ${dict1}
 
 Multiple Cluster Setup
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
+=======
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     &{esxes}=  Create Dictionary
     ${num_of_esxes}=  Evaluate  2
@@ -54,7 +57,11 @@ Multiple Cluster Setup
     ${esx2-ip}=  Get From List  ${esx-ips}  1
 
     ${esx3}  ${esx4}  ${esx5}  ${vc}  ${esx3-ip}  ${esx4-ip}  ${esx5-ip}  ${vc-ip}=  Create a Simple VC Cluster  datacenter1  cls1
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     Set Suite Variable  @{list}  ${esx1}  ${esx2}  ${esx3}  ${esx4}  ${esx5}  %{NIMBUS_USER}-${vc}
+=======
+    Set Suite Variable  @{list}  ${esx1}  ${esx2}  ${esx3}  ${esx4}  ${esx5}  ${vc}
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
 
     Log To Console  Create cluster2 on the VC
     ${out}=  Run  govc cluster.create cls2

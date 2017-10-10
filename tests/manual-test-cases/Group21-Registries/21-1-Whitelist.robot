@@ -22,7 +22,10 @@ Test Teardown  Run Keyword If Test Failed  Cleanup VIC Appliance On Test Server
 
 *** Keywords ***
 Simple ESXi Setup
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
+=======
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
     ${esx}  ${esx-ip}=  Deploy Nimbus ESXi Server  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}
     Set Suite Variable  @{list}  ${esx}
 
@@ -39,7 +42,11 @@ Simple ESXi Setup
     Remove Environment Variable  PUBLIC_NETWORK
 
 Setup Harbor
+<<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     Simple ESXi Setup
+=======
+    Wait Until Keyword Succeeds  10x  10m  Simple ESXi Setup
+>>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
 
     # Install a Harbor server with HTTPS a Harbor server with HTTP
     Install Harbor To Test Server  protocol=https  name=harbor-https
