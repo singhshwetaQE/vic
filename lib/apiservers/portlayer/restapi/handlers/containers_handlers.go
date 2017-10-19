@@ -544,6 +544,18 @@ func convertContainerToContainerInfo(c *exec.Container) *models.ContainerInfo {
 		container = c.Info()
 	}
 
+	// ensure we have probably up-to-date info
+	for _, endpoint := range container.ExecConfig.Networks {
+		if !endpoint.Static && (endpoint.IP == nil || ip.IsUnspecifiedIP(endpoint.IP.IP)) {
+			// container has dynamic IP but we do not have a reported address
+			op := trace.NewOperation(context.Background(), "state refresh triggered by missing DHCP data")
+			c.Refresh(op)
+			container = c.Info()
+			// shouldn't need multiple refreshes if multiple dhcps
+			break
+		}
+	}
+
 	// convert the container type to the required model
 	info := &models.ContainerInfo{
 		ContainerConfig: &models.ContainerConfig{},
@@ -630,6 +642,15 @@ func convertContainerToContainerInfo(c *exec.Container) *models.ContainerInfo {
 
 	info.HostConfig = &models.HostConfig{}
 	for _, endpoint := range container.ExecConfig.Networks {
+		// if an external type this will be the endpoint used to publish ports
+		if endpoint.Network.Type == constants.ExternalScopeType && !ip.IsUnspecifiedIP(endpoint.Assigned.IP) {
+			info.HostConfig.Address = endpoint.Assigned.IP.String()
+			if endpoint.Network.TrustLevel == executor.Open {
+				// add all ports as port range
+				info.HostConfig.Ports = append(info.HostConfig.Ports, constants.PortsOpenNetwork)
+			}
+		}
+
 		ep := &models.EndpointConfig{
 			Address:     "",
 			Container:   ccid,

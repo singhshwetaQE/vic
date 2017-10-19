@@ -30,6 +30,11 @@ import (
 	dnetwork "github.com/docker/docker/api/types/network"
 	"github.com/docker/docker/reference"
 	"github.com/docker/go-connections/nat"
+<<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
+=======
+	"github.com/stretchr/testify/assert"
+
+>>>>>>> Fix DHCP and IP reporting for container networks
 	"github.com/go-openapi/runtime"
 	"github.com/stretchr/testify/assert"
 
@@ -769,12 +774,17 @@ func TestPortInformation(t *testing.T) {
 	mockHostConfig.PortBindings = portMap
 
 	mockContainerInfo.ContainerConfig = mockContainerConfig
+<<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
 	mockContainerInfo.Endpoints = []*plmodels.EndpointConfig{
 		{
 			Direct: true,
 			Trust:  executor.Published.String(),
 			Ports:  []string{"8000/tcp"},
 		},
+=======
+	mockContainerInfo.HostConfig = &plmodels.HostConfig{
+		Ports: []string{"8000/tcp"},
+>>>>>>> Fix DHCP and IP reporting for container networks
 	}
 
 	ips := []string{"192.168.1.1"}
@@ -786,6 +796,7 @@ func TestPortInformation(t *testing.T) {
 	co.Name = "bar"
 	cache.ContainerCache().AddContainer(co)
 
+<<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
 	// unless there are entries in vicnetwork.ContainerByPort we won't report them as bound
 	ports := network.PortForwardingInformation(nil, ips)
 	assert.Empty(t, ports, "No ports should be returned for nil container")
@@ -804,6 +815,22 @@ func TestPortInformation(t *testing.T) {
 	assert.Equal(t, 1, len(ports), "Expected 1 port binding, found %d", len(ports))
 	// now that this port presents as a forwarded port it should NOT present as a direct port
 	ports = network.DirectPortInformation(mockContainerInfo)
+=======
+	// unless there are entries in containerByPort we won't report them as bound
+	ports := portForwardingInformation(mockContainerInfo, ips)
+	assert.Empty(t, ports, "There should be no bound IPs at this point for forwarding")
+
+	// the current port binding should show up as a direct port
+	ports = directPortInformation(mockContainerInfo)
+	assert.NotEmpty(t, ports, "There should be a direct port")
+
+	containerByPort["8000"] = containerID
+	ports = portForwardingInformation(mockContainerInfo, ips)
+	assert.NotEmpty(t, ports, "There should be bound IPs")
+	assert.Equal(t, 1, len(ports), "Expected 1 port binding, found %d", len(ports))
+	// now that this port presents as a forwarded port it should NOT present as a direct port
+	ports = directPortInformation(mockContainerInfo)
+>>>>>>> Fix DHCP and IP reporting for container networks
 	assert.Empty(t, ports, "There should not be a direct port")
 
 	port, _ = nat.NewPort("tcp", "80")
@@ -815,8 +842,13 @@ func TestPortInformation(t *testing.T) {
 
 	// forwarding of 00 should never happen, but this is allowing us to confirm that
 	// it's kicked out by the function even if present in the map
+<<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
 	network.ContainerByPort["00"] = containerID
 	ports = network.PortForwardingInformation(co, ips)
+=======
+	containerByPort["00"] = containerID
+	ports = portForwardingInformation(mockContainerInfo, ips)
+>>>>>>> Fix DHCP and IP reporting for container networks
 	assert.NotEmpty(t, ports, "There should be 1 bound IP")
 	assert.Equal(t, 1, len(ports), "Expected 1 port binding, found %d", len(ports))
 
@@ -826,8 +858,13 @@ func TestPortInformation(t *testing.T) {
 		HostPort: "800",
 	}
 	portMap[port] = portBindings
+<<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
 	network.ContainerByPort["800"] = containerID
 	ports = network.PortForwardingInformation(co, ips)
+=======
+	containerByPort["800"] = containerID
+	ports = portForwardingInformation(mockContainerInfo, ips)
+>>>>>>> Fix DHCP and IP reporting for container networks
 	assert.Equal(t, 2, len(ports), "Expected 2 port binding, found %d", len(ports))
 }
 

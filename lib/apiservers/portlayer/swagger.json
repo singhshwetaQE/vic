@@ -3414,6 +3414,18 @@
 				},
 				"reservation": {
 					"$ref": "#/definitions/ReservationConfig"
+<<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
+=======
+				},
+				"address": {
+					"type": "string"
+				},
+				"ports": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+>>>>>>> Fix DHCP and IP reporting for container networks
 				}
 			}
 		},
