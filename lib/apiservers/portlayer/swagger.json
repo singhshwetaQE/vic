@@ -3414,6 +3414,7 @@
 				},
 				"reservation": {
 					"$ref": "#/definitions/ReservationConfig"
+<<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
 <<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
 =======
 				},
@@ -3426,6 +3427,8 @@
 						"type": "string"
 					}
 >>>>>>> Fix DHCP and IP reporting for container networks
+=======
+>>>>>>> Correct ps output after network connect
 				}
 			}
 		},

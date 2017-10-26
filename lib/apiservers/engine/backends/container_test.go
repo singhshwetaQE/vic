@@ -47,6 +47,10 @@ import (
 	plscopes "github.com/vmware/vic/lib/apiservers/portlayer/client/scopes"
 	"github.com/vmware/vic/lib/apiservers/portlayer/models"
 	plmodels "github.com/vmware/vic/lib/apiservers/portlayer/models"
+<<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
+=======
+	"github.com/vmware/vic/lib/archive"
+>>>>>>> Correct ps output after network connect
 	"github.com/vmware/vic/lib/config/executor"
 	"github.com/vmware/vic/lib/metadata"
 	"github.com/vmware/vic/pkg/trace"
@@ -774,17 +778,23 @@ func TestPortInformation(t *testing.T) {
 	mockHostConfig.PortBindings = portMap
 
 	mockContainerInfo.ContainerConfig = mockContainerConfig
+<<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
 <<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
+=======
+>>>>>>> Correct ps output after network connect
 	mockContainerInfo.Endpoints = []*plmodels.EndpointConfig{
 		{
 			Direct: true,
 			Trust:  executor.Published.String(),
 			Ports:  []string{"8000/tcp"},
 		},
+<<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
 =======
 	mockContainerInfo.HostConfig = &plmodels.HostConfig{
 		Ports: []string{"8000/tcp"},
 >>>>>>> Fix DHCP and IP reporting for container networks
+=======
+>>>>>>> Correct ps output after network connect
 	}
 
 	ips := []string{"192.168.1.1"}

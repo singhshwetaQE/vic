@@ -154,6 +154,7 @@ Container on Open Network And Port Forwarding Persist After Reboot
     [Setup]     NONE
 
     Log To Console  Create Port Groups For Container network
+<<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
     ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'ESXi'  Run  govc host.portgroup.remove open-net
     Run Keyword If  '%{HOST_TYPE}' == 'VC'  Remove VC Distributed Portgroup  open-net
 
@@ -163,6 +164,9 @@ Container on Open Network And Port Forwarding Persist After Reboot
     ${dvs}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Run  govc find -type DistributedVirtualSwitch | head -n1
     ${rc}  ${output}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Run And Return Rc And Output  govc dvs.portgroup.add -vlan=${vlan} -dvs ${dvs} open-net
     Log  ${out}
+=======
+    ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'ESXi'  Run  govc host.portgroup.add -vswitch vSwitchLAN open-net
+>>>>>>> Correct ps output after network connect
 
     Install VIC Appliance To Test Server  additional-args=--container-network=open-net --container-network-firewall=open-net:open
 
@@ -205,10 +209,13 @@ Container on Open Network And Port Forwarding Persist After Reboot
     Should Not Be Equal As Integers  ${rc1}  0
     Should Not Be Equal As Integers  ${rc2}  0
 
+<<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
     Log To Console  Cleanup Port Groups For Container network
     ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'ESXi'  Run  govc host.portgroup.remove open-net
     ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Remove VC Distributed Portgroup  open-net
     Log  ${out}
+=======
+>>>>>>> Correct ps output after network connect
 
 Create VCH attach disk and reboot
     ${rc}=  Run And Return Rc  govc vm.disk.create -vm=%{VCH-NAME} -name=%{VCH-NAME}/deleteme -size "16M"

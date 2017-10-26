@@ -48,7 +48,11 @@ Hit Nginx Endpoint
     Should Be Equal As Integers  ${rc}  0
 
 Get Container IP
+<<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
     [Arguments]  ${docker-params}  ${id}  ${network}=bridge  ${dockercmd}=docker
+=======
+    [Arguments]  ${docker-params}  ${id}  ${network}=default  ${dockercmd}=docker
+>>>>>>> Correct ps output after network connect
     ${rc}  ${ip}=  Run And Return Rc And Output  ${dockercmd} ${docker-params} inspect --format='{{(index .NetworkSettings.Networks "${network}").IPAddress}}' ${id}
     Should Be Equal As Integers  ${rc}  0
     [Return]  ${ip}
