@@ -36,7 +36,13 @@ Set Test Environment Variables
     Set Environment Variable  GOVC_USERNAME  %{TEST_USERNAME}
     Set Environment Variable  GOVC_PASSWORD  %{TEST_PASSWORD}
 
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     ${rc}  ${thumbprint}=  Run And Return Rc And Output  govc about.cert -k -json | jq -r .ThumbprintSHA1
+=======
+    # TODO: need an integration/vic-test image update to include the about.cert command
+    #${rc}  ${thumbprint}=  Run And Return Rc And Output  govc about.cert -k | jq -r .ThumbprintSHA1
+    ${rc}  ${thumbprint}=  Run And Return Rc And Output  openssl s_client -connect $(govc env -x GOVC_URL_HOST):443 </dev/null 2>/dev/null | openssl x509 -fingerprint -noout | cut -d= -f2
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     Should Be Equal As Integers  ${rc}  0
     Set Environment Variable  TEST_THUMBPRINT  ${thumbprint}
     Log To Console  \nTEST_URL=%{TEST_URL}
@@ -227,7 +233,11 @@ Add VCH to Removal Exception List
 Remove VCH from Removal Exception List
     [Arguments]  ${vch}=${EMPTY}
     ${exceptions-string}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Return From Keyword If  '${exceptions-string}' == '${EMPTY}'  No Exceptions Found
+=======
+    Return From Keyword If  '${exceptions-string}' == '${EMPTY}'  No Exceptions Found 
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     @{exceptions-list}=  Run Keyword Unless  '${exceptions-string}' == '${EMPTY}'  Split String  ${exceptions-string}  separator=|
     ${idx}=  Get Index From List  ${exceptions-list}  ${vch}
     Remove From List  ${exceptions-list}  ${idx}
@@ -288,7 +298,11 @@ Conditional Install VIC Appliance To Test Server
 
     # In single vch mode, save VCH name to TARGET_VCH and add VCH to exception removal list
     Run Keyword If  ${init}  Set Environment Variable  TARGET_VCH  %{VCH-NAME}
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
 
+=======
+ 
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
 Install VIC Appliance To Test Server
     [Arguments]  ${vic-machine}=bin/vic-machine-linux  ${appliance-iso}=bin/appliance.iso  ${bootstrap-iso}=bin/bootstrap.iso  ${certs}=${true}  ${vol}=default  ${cleanup}=${true}  ${debug}=1  ${additional-args}=${EMPTY}
     Set Test Environment Variables
@@ -485,10 +499,17 @@ Cleanup VIC Appliance On Test Server
     ${memory}=  Run Keyword And Ignore Error  Get Hostd Memory Consumption
     Log  ${memory}
     Log To Console  Gathering logs from the test server %{VCH-NAME}
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Run Keyword And Continue On Failure  Gather Logs From Test Server
     # Exit from Cleanup if VCH-NAME is currently in exception list
     ${exclude}=  Check If VCH Is In Exception  vch=%{VCH-NAME}
     Run Keyword If  ${exclude}  Wait Until Keyword Succeeds  3x  5 seconds  Remove All Containers
+=======
+    Gather Logs From Test Server
+    Wait Until Keyword Succeeds  3x  5 seconds  Remove All Containers
+    # Exit from Cleanup if VCH-NAME is currently in exception list
+    ${exclude}=  Check If VCH Is In Exception  vch=%{VCH-NAME}
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     Return From Keyword If  ${exclude}
     Log To Console  Deleting the VCH appliance %{VCH-NAME}
     ${output}=  Run VIC Machine Delete Command
@@ -520,7 +541,10 @@ Remove VC Distributed Portgroup
 
 Cleanup Datastore On Test Server
     ${out}=  Run  govc datastore.ls
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Log  ${out}
+=======
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     ${exceptions}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
     ${items}=  Split To Lines  ${out}
     :FOR  ${item}  IN  @{items}
@@ -541,7 +565,10 @@ Cleanup Datastore On Test Server
 
 Cleanup Dangling VMs On Test Server
     ${out}=  Run  govc ls vm
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Log  ${out}
+=======
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     ${exceptions}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
     ${vms}=  Split To Lines  ${out}
     :FOR  ${vm}  IN  @{vms}
@@ -561,7 +588,10 @@ Cleanup Dangling VMs On Test Server
 
 Cleanup Dangling Resource Pools On Test Server
     ${out}=  Run  govc ls host/*/Resources/*
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Log  ${out}
+=======
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     ${exceptions}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
     ${pools}=  Split To Lines  ${out}
     :FOR  ${pool}  IN  @{pools}
@@ -581,7 +611,10 @@ Cleanup Dangling Resource Pools On Test Server
 
 Cleanup Dangling Networks On Test Server
     ${out}=  Run  govc ls network
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Log  ${out}
+=======
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     ${exceptions}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
     ${nets}=  Split To Lines  ${out}
     :FOR  ${net}  IN  @{nets}
@@ -589,10 +622,16 @@ Cleanup Dangling Networks On Test Server
     \   ${build}=  Split String  ${net}  -
     \   # Skip any Network that is not associated with integration tests
     \   Continue For Loop If  '@{build}[0]' != 'VCH'
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     \   # Don't blow away our unique bridge network when running locally
     \   Continue For Loop If  '@{build}[1]' == '0'
     \   # Skip any Network that is attached to a VCH in the exception list
     \   ${skip}=  Check If VCH Is In Exception  vch=@{build}[0]-@{build}[1]-@{build}[2]  exceptions=${exceptions}
+=======
+    \   # Skip any Network that is attached to a VCH in the exception list
+    \   @{name}=  Split String  ${net}  -bridge
+    \   ${skip}=  Check If VCH Is In Exception  vch=@{name}[0]  exceptions=${exceptions}
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     \   Continue For Loop If  ${skip}
     \   # Skip any Network that is still running
     \   ${state}=  Get State Of Drone Build  @{build}[1]
@@ -602,7 +641,10 @@ Cleanup Dangling Networks On Test Server
 
 Cleanup Dangling vSwitches On Test Server
     ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'ESXi'  Run  govc host.vswitch.info | grep VCH
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Log  ${out}
+=======
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     ${exceptions}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
     ${nets}=  Split To Lines  ${out}
     :FOR  ${net}  IN  @{nets}
@@ -611,7 +653,12 @@ Cleanup Dangling vSwitches On Test Server
     \   # Skip any vSwitch that is not associated with integration tests
     \   Continue For Loop If  '@{build}[0]' != 'VCH'
     \   # Skip any switch that is attached to a VCH in the exception list
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     \   ${skip}=  Check If VCH Is In Exception  vch=@{build}[0]-@{build}[1]-@{build}[2]  exceptions=${exceptions}
+=======
+    \   @{name}=  Split String  ${net}  -bridge
+    \   ${skip}=  Check If VCH Is In Exception  vch=@{name}[0]  exceptions=${exceptions}
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     \   Continue For Loop If  ${skip}
     \   # Skip any vSwitch that is still running
     \   ${state}=  Get State Of Drone Build  @{build}[1]
@@ -672,6 +719,10 @@ Install VIC with version to Test Server
     Log To Console  \nDownloading vic ${version} from gcp...
     ${rc}  ${output}=  Run And Return Rc And Output  wget https://storage.googleapis.com/vic-engine-builds/vic_${version}.tar.gz -O vic.tar.gz
     ${rc}  ${output}=  Run And Return Rc And Output  tar zxvf vic.tar.gz
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
+=======
+    Set Environment Variable  TEST_TIMEOUT  20m0s
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     Install VIC Appliance To Test Server  vic-machine=./vic/vic-machine-linux  appliance-iso=./vic/appliance.iso  bootstrap-iso=./vic/bootstrap.iso  certs=${false}  cleanup=${cleanup}  vol=default ${insecureregistry}
 
     Set Environment Variable  VIC-ADMIN  %{VCH-IP}:2378

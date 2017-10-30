@@ -241,7 +241,11 @@ Do Volumes Exist
     [Return]  ${true}
 
 Do Networks Exist
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} network ls -q
+=======
+    ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} networks ls -q
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     ${len}=  Get Length  ${output}
     Return From Keyword If  ${len} == 0  ${false}
     [Return]  ${true}
@@ -268,7 +272,11 @@ Kill All Containers
 Remove All Images
     ${exist}=  Do Images Exist
     Run Keyword If  ${exist}  Log To Console  Removing all images from %{VCH-NAME}
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
 
+=======
+    
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     Return From Keyword If  ${exist} == ${false}  0
     Run Keyword If  ${exist}  Remove All Containers
     Run Keyword If  ${exist}  Run  docker %{VCH-PARAMS} rmi $(docker %{VCH-PARAMS} images -q)
@@ -298,7 +306,11 @@ Remove All Container Networks
     ${exist}=  Do Networks Exist
     Return From Keyword If  ${exist} == ${false}  0
     [Return]  1
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
 
+=======
+    
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
 Add List To Dictionary
     [Arguments]  ${dict}  ${list}
     : FOR  ${item}  IN  @{list}
@@ -320,7 +332,11 @@ List Existing Images On VCH
     : FOR  ${tag}  IN  @{tags_dict.keys()}
     \    Log To Console  \t${tag}
 
+<<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
 List Running Containers On VCH
+=======
+List Running Containers On VCH    
+>>>>>>> Optimize Docker Command tests to one VCH (#6481)
     ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} ps -q
     Log To Console  ${EMPTY}
     ${len}=  Get Length  ${output}
