@@ -114,7 +114,7 @@ func (d *Dispatcher) NewVCHFromComputePath(computePath string, name string, v *v
 			d.op.Errorf("Failed to get VCH resource pool %q: %s", d.vchPoolPath, err)
 			return nil, err
 		}
-	}
+}
 
 	rp := compute.NewResourcePool(d.op, d.session, vchPool.Reference())
 

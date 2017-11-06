@@ -255,6 +255,7 @@ Create VCH - Existing RP on ESX
     ${rc}  ${output}=  Run And Return Rc And Output  govc pool.destroy %{TEST_RESOURCE}/%{VCH-NAME}
     Should Be Equal As Integers  ${rc}  0
 
+<<<<<<< da301be64550eaac1611d87350b44adb2f0f5741
 Creation log file uploaded to datastore
 
     Set Test Environment Variables
@@ -272,6 +273,8 @@ Creation log file uploaded to datastore
 
     Cleanup VIC Appliance On Test Server
 
+=======
+>>>>>>> Switch to using VCH resource pool by default (#6572)
 Basic timeout
     Set Test Environment Variables
     Run Keyword And Ignore Error  Cleanup Dangling VMs On Test Server

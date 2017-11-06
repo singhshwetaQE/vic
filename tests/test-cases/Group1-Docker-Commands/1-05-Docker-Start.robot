@@ -54,6 +54,11 @@ Start with no ethernet card
     Should Be Equal As Integers  ${rc}  0
     ${rc}  ${output}=  Run And Return Rc And Output  govc device.remove -vm ${name}-* ethernet-0
     Should Be Equal As Integers  ${rc}  0
+<<<<<<< da301be64550eaac1611d87350b44adb2f0f5741
+=======
+    ${rc}  ${output}=  Run And Return Rc And Output  govc device.remove -vm ${name}-* ethernet-0
+    Should Be Equal As Integers  ${rc}  0
+>>>>>>> Switch to using VCH resource pool by default (#6572)
     ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} start ${name}
     Should Be Equal As Integers  ${rc}  1
     Should Contain  ${output}  unable to wait for process launch status
@@ -128,6 +133,7 @@ Simple start with attach
     Should Contain  ${output}  bin
     Should Contain  ${output}  root
     Should Contain  ${output}  var
+<<<<<<< da301be64550eaac1611d87350b44adb2f0f5741
 
 Start with parallel inspection loop
     ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} pull ${busybox}
@@ -155,3 +161,5 @@ Start with parallel inspection loop
     ${rc}  ${out}=  Run And Return Rc And Output  docker %{VCH-PARAMS} logs ${containerB}
     Should Be Equal As Integers  ${rc}  0
     Log  ${out}
+=======
+>>>>>>> Switch to using VCH resource pool by default (#6572)
