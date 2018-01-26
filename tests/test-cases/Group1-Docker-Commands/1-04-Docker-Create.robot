@@ -46,19 +46,9 @@ Create with anonymous volume
     Should Not Contain  ${output}  Error
 
 Create with named volume
-<<<<<<< 62eec3f7bd78a8a2af5ed0f112ce1f73218a0500
     Run  docker %{VCH-PARAMS} volume rm test-named-vol
     ${disk-size}=  Run  docker %{VCH-PARAMS} logs $(docker %{VCH-PARAMS} start $(docker %{VCH-PARAMS} create -v test-named-vol:/testdir ${busybox} /bin/df -Ph) && sleep 10) | grep by-label | awk '{print $2}'
     Should Contain  ${disk-size}  975.9M
-=======
-<<<<<<< 6b93631366a6147fe3656f81320af357950c3cbf
-    ${disk-size}=  Run  docker %{VCH-PARAMS} logs $(docker %{VCH-PARAMS} start $(docker %{VCH-PARAMS} create -v test-named-vol:/testdir busybox /bin/df -Ph) && sleep 10) | grep by-label | awk '{print $2}'
-    Should Be Equal As Strings  ${disk-size}  975.9M
-=======
-    ${disk-size}=  Run  docker %{VCH-PARAMS} logs $(docker %{VCH-PARAMS} start $(docker %{VCH-PARAMS} create -v test-named-vol:/testdir ${busybox} /bin/df -Ph) && sleep 10) | grep by-label | awk '{print $2}'
-    Should Contain  ${disk-size}  975.9M
->>>>>>> [specific ci=Group1-Docker-Commands] Mask lost+found folder in volumes and untangle transitive imports (#6050)
->>>>>>> [specific ci=Group1-Docker-Commands] Mask lost+found folder in volumes and untangle transitive imports (#6050)
 
 Create with a directory as a volume
     ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} create -v /dir:/dir ${busybox}

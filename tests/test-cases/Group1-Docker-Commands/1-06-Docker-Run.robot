@@ -197,8 +197,12 @@ Docker run and auto remove with anonymous volumes and named volumes
     ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} volume ls
     Should Contain  ${output}  ${namedImageVol}
 
+<<<<<<< a4a2ced1e4867847a1987ea83fadf915b8afebd0
            
 >>>>>>> [specific ci=Group1-Docker-Commands] Mask lost+found folder in volumes and untangle transitive imports (#6050)
+=======
+
+>>>>>>> Add logical handling for superseding image volumes with named volumes (#7155)
 Docker run mysql container
     ${rc}  ${output}=  Run And Return Rc And Output  docker %{VCH-PARAMS} run -d -v vol:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=pw --name test-mysql mysql
     Should Be Equal As Integers  ${rc}  0
