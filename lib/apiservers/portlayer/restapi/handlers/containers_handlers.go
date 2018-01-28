@@ -535,6 +535,7 @@ func convertContainerToContainerInfo(c *exec.Container) *models.ContainerInfo {
 				transient = true
 				break
 			}
+<<<<<<< f758f0bc33fd7a978c1f5d382348bbb74df851c9
 		}
 	}
 
@@ -553,7 +554,15 @@ func convertContainerToContainerInfo(c *exec.Container) *models.ContainerInfo {
 			container = c.Info()
 			// shouldn't need multiple refreshes if multiple dhcps
 			break
+=======
+>>>>>>> Generate internal events on state update [full ci] (#7140)
 		}
+	}
+
+	if transient {
+		op := trace.NewOperation(context.Background(), "state refresh triggered by a transient data state")
+		c.Refresh(op)
+		container = c.Info()
 	}
 
 	// convert the container type to the required model

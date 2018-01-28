@@ -264,13 +264,9 @@ func (p DockerEventPublisher) PublishEvent(event plevents.BaseEvent) {
 			attrs["exitCode"] = code
 			actor := CreateContainerEventActorWithAttributes(vc, attrs)
 			EventService().Log(containerDieEvent, eventtypes.ContainerEventType, actor)
-<<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
 			// TODO: this really, really shouldn't be in the event publishing code - it's fine to have multiple consumers of events
 			// and this should be registered as a callback by the logic responsible for the MapPorts portion.
 			if err := network.UnmapPorts(vc.ContainerID, vc); err != nil {
-=======
-			if err := UnmapPorts(vc.ContainerID, vc); err != nil {
->>>>>>> Correct ps output after network connect
 				log.Errorf("Event Monitor failed to unmap ports for container(%s): %s - eventID(%s)", containerShortID, err, event.ID)
 			}
 
@@ -293,11 +289,7 @@ func (p DockerEventPublisher) PublishEvent(event plevents.BaseEvent) {
 		// pop the destroy event...
 		actor := CreateContainerEventActorWithAttributes(vc, attrs)
 		EventService().Log(containerDestroyEvent, eventtypes.ContainerEventType, actor)
-<<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
 		if err := network.UnmapPorts(vc.ContainerID, vc); err != nil {
-=======
-		if err := UnmapPorts(vc.ContainerID, vc); err != nil {
->>>>>>> Correct ps output after network connect
 			log.Errorf("Event Monitor failed to unmap ports for container(%s): %s - eventID(%s)", containerShortID, err, event.ID)
 		}
 		// remove from the container cache...

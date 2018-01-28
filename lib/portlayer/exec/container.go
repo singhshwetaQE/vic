@@ -385,6 +385,11 @@ func (c *Container) start(op trace.Operation) error {
 	if c.vm == nil {
 		return fmt.Errorf("vm not set")
 	}
+<<<<<<< f758f0bc33fd7a978c1f5d382348bbb74df851c9
+=======
+	// Set state to Starting
+	c.SetState(op, StateStarting)
+>>>>>>> Generate internal events on state update [full ci] (#7140)
 
 	// We do NOT call SetState here because if someone triggers an update on the container between that call and the pwoeron
 	// being reflected in the propertyCollector return data then we would trigger a 'Stopped' event and will perform any event
@@ -422,11 +427,17 @@ func (c *Container) start(op trace.Operation) error {
 		return err
 	}
 
+<<<<<<< f758f0bc33fd7a978c1f5d382348bbb74df851c9
 	// The process launch was successful so transition the state to Running only if current state is Starting.
 	// The state at this time could be:
 	//   Stopped - if the container process exited and a poweroff event has been received
 	//   Starting - if the power on event was received before the process reported success or failure
 	//   Running - if the power on event was received after the process reported success
+=======
+	// Transition the state to Running only if it's Starting.
+	// The current state is already Stopped if the container's process has exited or
+	// a poweredoff event has been processed.
+>>>>>>> Generate internal events on state update [full ci] (#7140)
 	if err = c.transitionState(op, StateStarting, StateRunning); err != nil {
 		op.Debugf(err.Error())
 	}
@@ -714,13 +725,37 @@ func (c *Container) OnEvent(e events.Event) {
 	c.onEvent(op, newState, e)
 }
 
+<<<<<<< f758f0bc33fd7a978c1f5d382348bbb74df851c9
+=======
+// determine if the containerVM has started - this could pick up stale data in the started field for an out-of-band
+// power change such as HA or user intervention where we have not had an opportunity to reset the entry.
+func cleanStart(op trace.Operation, c *Container) bool {
+	if len(c.ExecConfig.Sessions) == 0 {
+		op.Warnf("Container %c has no sessions stored in in-memory config", c.ExecConfig.ID)
+		// if no sessions, then nothing to wait for
+		return true
+	}
+
+	for _, session := range c.ExecConfig.Sessions {
+		if session.Started != "true" {
+			return false
+		}
+	}
+	return true
+}
+
+>>>>>>> Generate internal events on state update [full ci] (#7140)
 // onEvent determines what needs to be done when receiving a state update. It filters duplicate state transitions
 // and publishes container events as needed in addition to performing necessary manipulations.
 // newState - this is the new state determined by eventedState
 // e - the source event used to derive the new State and reason for the transition
 func (c *Container) onEvent(op trace.Operation, newState State, e events.Event) {
 	// does local data report full start
+<<<<<<< f758f0bc33fd7a978c1f5d382348bbb74df851c9
 	started := c.cleanStart(op)
+=======
+	started := cleanStart(op, c)
+>>>>>>> Generate internal events on state update [full ci] (#7140)
 	// do we need a refresh
 	refresh := e.String() == events.ContainerRelocated
 	// if it's a state event we've already done a refresh to end up here and dont need another
@@ -751,7 +786,11 @@ func (c *Container) onEvent(op trace.Operation, newState State, e events.Event) 
 		}
 	}
 
+<<<<<<< f758f0bc33fd7a978c1f5d382348bbb74df851c9
 	started = c.cleanStart(op)
+=======
+	started = cleanStart(op, c)
+>>>>>>> Generate internal events on state update [full ci] (#7140)
 	// it doesn't matter how the event was translated, if we're not fully started then we're starting
 	// if we are then we're running. Only exception is that we don't transition from Running->Starting
 	if newState == StateRunning && !started && c.state != StateRunning {
