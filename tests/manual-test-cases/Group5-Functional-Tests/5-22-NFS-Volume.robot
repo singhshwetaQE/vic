@@ -39,10 +39,14 @@ ${mntNamed}=  /mnt/named
 
 *** Keywords ***
 Setup ESX And NFS Suite
+<<<<<<< d71cdd19f35c70a8ea390a0c96d9a019316301f4
 <<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
 =======
 >>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
+=======
+    [Timeout]    110 minutes
+>>>>>>> Add timeouts to nightly tests to prevent jenkins timeout (#7080)
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     Log To Console  \nStarting test...
 

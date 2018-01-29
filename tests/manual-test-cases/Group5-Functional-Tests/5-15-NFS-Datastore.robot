@@ -20,7 +20,10 @@ Suite Teardown  Run Keyword And Ignore Error  Nimbus Cleanup  ${list}
 
 *** Keywords ***
 NFS Datastore Setup
+<<<<<<< d71cdd19f35c70a8ea390a0c96d9a019316301f4
 <<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
+=======
+>>>>>>> Add timeouts to nightly tests to prevent jenkins timeout (#7080)
     [Timeout]    110 minutes
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     ${esx1}  ${esx2}  ${esx3}  ${vc}  ${esx1-ip}  ${esx2-ip}  ${esx3-ip}  ${vc-ip}=  Create a Simple VC Cluster  datacenter1  cls1

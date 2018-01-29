@@ -250,12 +250,16 @@ Gather Host IPs
 
 Create a VSAN Cluster
     [Arguments]  ${name}=vic-vmotion
+<<<<<<< d71cdd19f35c70a8ea390a0c96d9a019316301f4
 <<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
     Log To Console  \nStarting basic VSAN cluster deploy...
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     ${out}=  Deploy Nimbus Testbed  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}  --plugin testng --lease 0.25 --noStatsDump --noSupportBundles --vcvaBuild ${VC_VERSION} --esxPxeDir ${ESX_VERSION} --esxBuild ${ESX_VERSION} --testbedName vcqa-vsan-simple-pxeBoot-vcva --runName ${name}
 =======
+=======
+    [Timeout]    110 minutes
+>>>>>>> Add timeouts to nightly tests to prevent jenkins timeout (#7080)
     Log To Console  \nStarting basic VSAN cluster deploy...
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     ${out}=  Deploy Nimbus Testbed  %{NIMBUS_USER}  %{NIMBUS_PASSWORD}  --plugin testng --lease 1 --noStatsDump --noSupportBundles --vcvaBuild ${VC_VERSION} --esxPxeDir ${ESX_VERSION} --esxBuild ${ESX_VERSION} --testbedName vcqa-vsan-simple-pxeBoot-vcva --runName ${name}

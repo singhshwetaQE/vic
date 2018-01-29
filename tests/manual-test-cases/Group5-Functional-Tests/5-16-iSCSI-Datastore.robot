@@ -20,7 +20,10 @@ Suite Teardown  Run Keyword And Ignore Error  Nimbus Cleanup  ${list}
 
 *** Keywords ***
 iSCSI Datastore Setup
+<<<<<<< d71cdd19f35c70a8ea390a0c96d9a019316301f4
 <<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
+=======
+>>>>>>> Add timeouts to nightly tests to prevent jenkins timeout (#7080)
     [Timeout]    110 minutes
     Run Keyword And Ignore Error  Nimbus Cleanup  ${list}  ${false}
     ${name}=  Evaluate  'vic-iscsi-' + str(random.randint(1000,9999))  modules=random

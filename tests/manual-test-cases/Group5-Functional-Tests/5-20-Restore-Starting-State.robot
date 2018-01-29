@@ -20,10 +20,14 @@ Resource  ../../resources/Util.robot
 
 *** Test Cases ***
 Restore Container Starting State on Restart
+<<<<<<< d71cdd19f35c70a8ea390a0c96d9a019316301f4
 <<<<<<< b3681d371002a134b6ab67dce74e2dd17679bc1e
     [Timeout]    110 minutes
 =======
 >>>>>>> Remove drone from nightly and allow for nimbus retries (#6530)
+=======
+    [Timeout]    110 minutes
+>>>>>>> Add timeouts to nightly tests to prevent jenkins timeout (#7080)
     Pass Execution  Not sure why this test case is here, but it needs to be re-implemented to work in Nimbus
 	# enable firewall
 	Run  govc host.esxcli network firewall set -e true
