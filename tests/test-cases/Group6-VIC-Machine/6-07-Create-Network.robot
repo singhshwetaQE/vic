@@ -164,7 +164,11 @@ Connectivity Bridge to Public
     ${dvs}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Run  govc find -type DistributedVirtualSwitch | head -n1
     ${rc}  ${output}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Run And Return Rc And Output  govc dvs.portgroup.add -vlan=${vlan} -dvs ${dvs} pub-network
 
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     ${output}=  Run  bin/vic-machine-linux create --debug 1 --name=%{VCH-NAME} --target=%{TEST_URL}%{TEST_DATACENTER} --thumbprint=%{TEST_THUMBPRINT} --user=%{TEST_USERNAME} --image-store=%{TEST_DATASTORE} --password=%{TEST_PASSWORD} --force=true --bridge-network=%{BRIDGE_NETWORK} --public-network=pub-network --compute-resource=%{TEST_RESOURCE} --container-network pub-network --container-network-firewall pub-network:published --no-tlsverify --insecure-registry wdc-harbor-ci.eng.vmware.com
+=======
+    ${output}=  Run  bin/vic-machine-linux create --debug 1 --name=%{VCH-NAME} --target=%{TEST_URL}%{TEST_DATACENTER} --thumbprint=%{TEST_THUMBPRINT} --user=%{TEST_USERNAME} --image-store=%{TEST_DATASTORE} --password=%{TEST_PASSWORD} --force=true --bridge-network=bridge --public-network=vm-network --compute-resource=%{TEST_RESOURCE} --container-network vm-network --container-network-firewall vm-network:published --no-tlsverify --insecure-registry wdc-harbor-ci.eng.vmware.com
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
 
     Should Contain  ${output}  Installer completed successfully
     Get Docker Params  ${output}  ${true}
@@ -216,7 +220,11 @@ Connectivity Bridge to Management
     ${dvs}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Run  govc find -type DistributedVirtualSwitch | head -n1
     ${rc}  ${output}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Run And Return Rc And Output  govc dvs.portgroup.add -vlan=${vlan} -dvs ${dvs} management
 
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     ${output}=  Run  bin/vic-machine-linux create --debug 1 --name=%{VCH-NAME} --target=%{TEST_URL}%{TEST_DATACENTER} --thumbprint=%{TEST_THUMBPRINT} --user=%{TEST_USERNAME} --image-store=%{TEST_DATASTORE} --password=%{TEST_PASSWORD} --force=true --public-network=%{PUBLIC_NETWORK} --bridge-network=%{BRIDGE_NETWORK} --management-network=management --management-network-ip=10.10.10.2/24 --compute-resource=%{TEST_RESOURCE} --container-network management --container-network-ip-range=management:10.10.10.3-10.10.10.13 --container-network-gateway=management:10.10.10.1/24 --no-tlsverify --insecure-registry wdc-harbor-ci.eng.vmware.com
+=======
+    ${output}=  Run  bin/vic-machine-linux create --debug 1 --name=%{VCH-NAME} --target=%{TEST_URL}%{TEST_DATACENTER} --thumbprint=%{TEST_THUMBPRINT} --user=%{TEST_USERNAME} --image-store=%{TEST_DATASTORE} --password=%{TEST_PASSWORD} --force=true --bridge-network=bridge --compute-resource=%{TEST_RESOURCE} --container-network management --container-network vm-network --container-network-ip-range=management:10.10.10.0/24 --container-network-gateway=management:10.10.10.1/24 --no-tlsverify --insecure-registry wdc-harbor-ci.eng.vmware.com
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
 
     Should Contain  ${output}  Installer completed successfully
     Get Docker Params  ${output}  ${true}
@@ -419,7 +427,11 @@ Container network - space in network name valid
     ${dvs}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Run  govc find -type DistributedVirtualSwitch | head -n1
     ${rc}  ${output}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Run And Return Rc And Output  govc dvs.portgroup.add -vlan=${vlan} -dvs ${dvs} 'VM Network With Spaces'
 
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     ${output}=  Run  bin/vic-machine-linux create --name=%{VCH-NAME} --target="%{TEST_USERNAME}:%{TEST_PASSWORD}@%{TEST_URL}" --thumbprint=%{TEST_THUMBPRINT} --image-store=%{TEST_DATASTORE} --public-network=%{PUBLIC_NETWORK} --bridge-network=%{BRIDGE_NETWORK} --container-network 'VM Network With Spaces':vmnet --insecure-registry wdc-harbor-ci.eng.vmware.com ${vicmachinetls}
+=======
+    ${output}=  Run  bin/vic-machine-linux create --name=%{VCH-NAME} --target="%{TEST_USERNAME}:%{TEST_PASSWORD}@%{TEST_URL}" --thumbprint=%{TEST_THUMBPRINT} --image-store=%{TEST_DATASTORE} --bridge-network=bridge --container-network 'VM Network With Spaces':vmnet --insecure-registry wdc-harbor-ci.eng.vmware.com ${vicmachinetls}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     Should Contain  ${output}  Installer completed successfully
     Get Docker Params  ${output}  ${true}
     Log To Console  Installer completed successfully: %{VCH-NAME}
@@ -470,7 +482,11 @@ Container Firewalls
     ...  bin/vic-machine-linux create --debug 1 --name=%{VCH-NAME}
     ...  --target=%{TEST_URL}%{TEST_DATACENTER} --thumbprint=%{TEST_THUMBPRINT}
     ...  --user=%{TEST_USERNAME} --image-store=%{TEST_DATASTORE} --password=%{TEST_PASSWORD}
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     ...  --force=true --public-network=%{PUBLIC_NETWORK} --bridge-network=%{BRIDGE_NETWORK} --compute-resource=%{TEST_RESOURCE} --no-tlsverify
+=======
+    ...  --force=true --bridge-network=bridge --compute-resource=%{TEST_RESOURCE} --no-tlsverify
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     ...  --insecure-registry wdc-harbor-ci.eng.vmware.com
     ...  --container-network open-net --container-network-firewall open-net:open
     ...  --container-network closed-net --container-network-firewall closed-net:closed

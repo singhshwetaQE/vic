@@ -78,7 +78,11 @@ pipeline:
     # dont clone submodules
     recursive: false
   vic-integration-test-on-pr:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     image: gcr.io/eminent-nation-87317/vic-integration-test:1.48
+=======
+    image: gcr.io/eminent-nation-87317/vic-integration-test:1.44
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     environment:
       GITHUB_AUTOMATION_API_KEY: $GITHUB_TOKEN

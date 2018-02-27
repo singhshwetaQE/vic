@@ -15,9 +15,15 @@
 
 set -e
 
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 # check if DRONE_MACHINE is available
 if [ -z "${DRONE_MACHINE}" ]; then
     echo "WARN: DRONE_MACHINE is not set";
+=======
+# check if DRONE_HOSTNAME is available
+if [ -z "${DRONE_HOSTNAME}" ]; then
+    echo "WARN: DRONE_HOSTNAME is not set";
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
 else
-    echo "DRONE_MACHINE is set to '$DRONE_MACHINE'";
+    echo "DRONE_HOSTNAME is set to '$DRONE_HOSTNAME'";
 fi

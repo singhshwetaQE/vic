@@ -144,10 +144,13 @@ export DRONE_TOKEN=<Drone Token>
 export DRONE_SERVER=https://ci-vic.vmware.com
 
 drone build start vmware/vic <Build Number>
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 ```
 If you are not a member of `vmware` org in github, then your PR build may fail. In that case, request one of the existing members / reviewers to fork your failed build to skip membership checking.
 ```shell
 drone build start --param SKIP_CHECK_MEMBERSHIP=true vmware/vic <Build Number>
+=======
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
 ```
 
 ### Testing locally

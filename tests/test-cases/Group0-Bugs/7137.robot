@@ -33,11 +33,15 @@ Check for die events when forcing update via state refresh
     Should Be Equal As Integers  ${rc}  0
 
     # tight loop on inspect - this will force an inline state refresh
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 <<<<<<< f758f0bc33fd7a978c1f5d382348bbb74df851c9
     Run  end=$(($(date +%s) + 24));while [ $(date +%s) -lt $end ]; do docker %{VCH-PARAMS} inspect ${id} >/dev/null; done
 =======
     Run  end=$(($(date +%s) + 6));while [ $(date +%s) -lt $end ]; do docker %{VCH-PARAMS} inspect ${id} >/dev/null; done
 >>>>>>> Generate internal events on state update [full ci] (#7140)
+=======
+    Run  end=$(($(date +%s) + 24));while [ $(date +%s) -lt $end ]; do docker %{VCH-PARAMS} inspect ${id} >/dev/null; done
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
 
     ${rc}  ${until}=  Run And Return Rc And Output  docker %{VCH-PARAMS} info --format '{{json .SystemTime}}'
     Should Be Equal As Integers  ${rc}  0

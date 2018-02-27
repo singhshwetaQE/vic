@@ -12,7 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 FROM gcr.io/eminent-nation-87317/vic-integration-test:1.48
+=======
+FROM gcr.io/eminent-nation-87317/vic-integration-test:1.44
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
 RUN mkdir -p /go/src/github.com/vmware/vic
 COPY secrets /go/src/github.com/vmware/vic
 ENV LONGEVITY=1

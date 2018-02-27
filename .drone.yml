@@ -4,6 +4,7 @@ workspace:
   base: /go
   path: src/github.com/vmware/vic
 
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 clone:
   git:
     image: plugins/git
@@ -14,6 +15,17 @@ pipeline:
 
   display-status:
     image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.48'
+=======
+pipeline:
+
+  clone:
+    image: plugins/git
+    tags: true
+    recursive: false
+
+  display-status:
+    image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.44'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     environment:
       BIN: bin
@@ -25,7 +37,11 @@ pipeline:
       - 'git log -1 --pretty=oneline | grep "^${DRONE_COMMIT}" > /dev/null && echo ''Build matches'' || (git log -1 --pretty=oneline | grep "Merge ${DRONE_COMMIT}" > /dev/null && echo ''Build is of a merge commit'' || (echo ''Build does not match!'' && exit 1))'
 
   wait-for-build:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.48'
+=======
+    image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.44'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     environment:
       BIN: bin
@@ -39,7 +55,11 @@ pipeline:
       - tests/wait_until_previous_builds_complete.sh
 
   check-org-membership:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.48'
+=======
+    image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.44'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     environment:
       BIN: bin
@@ -47,16 +67,26 @@ pipeline:
       SHELL: /bin/bash
     secrets:
       - github_automation_api_key
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
       - skip_check_membership
     commands:
       - echo ${DRONE_COMMIT_AUTHOR}
       - echo $SKIP_CHECK_MEMBERSHIP
       - if "$SKIP_CHECK_MEMBERSHIP" == true; then echo 'check-org-membership step skipped'; else /bin/bash -c '[[ ! $(curl --silent "https://api.github.com/orgs/vmware/members/${DRONE_COMMIT_AUTHOR}?access_token=$GITHUB_AUTOMATION_API_KEY") ]]'; fi
+=======
+    commands:
+      - echo ${DRONE_COMMIT_AUTHOR}
+      - /bin/bash -c '[[ ! $(curl --silent "https://api.github.com/orgs/vmware/members/${DRONE_COMMIT_AUTHOR}?access_token=$GITHUB_AUTOMATION_API_KEY") ]]'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     when:
       status: success
 
   vic-engine:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.48'
+=======
+    image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.44'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     environment:
       BIN: bin
@@ -65,12 +95,18 @@ pipeline:
     secrets:
       - drone_server
       - drone_token
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
       - github_automation_api_key
+=======
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
       - registry_password
       - test_password
       - test_url_array
       - test_username
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
       - codecov_token
+=======
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     commands:
       - 'export BUILD_NUMBER=${DRONE_BUILD_NUMBER}'
       - 'export COMMIT=${DRONE_COMMIT}'
@@ -88,7 +124,11 @@ pipeline:
       status: success
 
   vic-integration-test-on-pr:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.48'
+=======
+    image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.44'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     privileged: true
     environment:
@@ -97,6 +137,10 @@ pipeline:
       SHELL: /bin/bash
       LOG_TEMP_DIR: install-logs
     secrets:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
+=======
+      - bridge_network
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
       - ci_domain
       - debug_vch
       - drone_server
@@ -124,6 +168,7 @@ pipeline:
       - export GOVC_PASSWORD=$TEST_PASSWORD
       - export GOVC_DATASTORE=$TEST_DATASTORE
       - export DOMAIN=$CI_DOMAIN
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
       - export MULTI_VCH=1
       - echo $DOMAIN
       - 'make mark'
@@ -133,13 +178,23 @@ pipeline:
 =======
       - make sincemark
 >>>>>>> Initial implementation of docker archive tests (#6056)
+=======
+      - echo $DOMAIN
+      - 'make mark'
+      - tests/integration-test.sh
+      - 'make sincemark'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     volumes:
       - /tmp
     when:
       status: success
 
   vic-ui:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.48'
+=======
+    image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.44'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     environment:
      BIN: bin
@@ -157,11 +212,19 @@ pipeline:
       - 'ls -la ./$BIN && ./$BIN/ui/sync-vic-ui-version.sh -p bin/ 2>&1'
       - 'rm $BIN/vic_ui_*.tar.gz'
     when:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
       status: [success, failure]
       branch: [master]
 
   vic-ui-release:
     image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.48'
+=======
+      status: success
+      branch: [master]
+
+  vic-ui-release:
+    image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.44'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     environment:
       BIN: bin
@@ -183,7 +246,11 @@ pipeline:
      branch: ['releases/*', 'refs/tags/*']
 
   bundle:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     image: 'wdc-harbor-ci.eng.vmware.com/default-project/golang:1.8'
+=======
+    image: 'gcr.io/eminent-nation-87317/golang:1.8'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     environment:
       BIN: bin
@@ -215,10 +282,16 @@ pipeline:
       repo: vmware/vic
       event: [push, tag]
       branch: [master, 'releases/*', 'refs/tags/*']
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
       status: [success, failure]
 
   publish-gcs-builds-on-pass:
     image: 'victest/drone-gcs:1'
+=======
+
+  publish-gcs-builds-on-pass:
+    image: 'maplain/drone-gcs:latest'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     secrets:
       - google_key
@@ -234,7 +307,11 @@ pipeline:
       status: success
 
   publish-gcs-builds-on-fail:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     image: 'victest/drone-gcs:1'
+=======
+    image: 'maplain/drone-gcs:latest'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     secrets:
       - google_key
@@ -250,7 +327,11 @@ pipeline:
       status: failure
 
   publish-gcs-releases:
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     image: 'victest/drone-gcs:1'
+=======
+    image: 'maplain/drone-gcs:latest'
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     pull: true
     secrets:
       - google_key
@@ -314,6 +395,16 @@ pipeline:
       branch: [master, 'releases/*', 'refs/tags/*']
       status: success
 
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
+=======
+  report-coverage:
+    image: robertstettner/drone-codecov
+    secrets:
+      - codecov_token
+    files:
+      - .cover/cover.out
+
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
   notify-slack-on-fail:
     image: plugins/slack
     secrets:
@@ -351,6 +442,7 @@ pipeline:
       repo: vmware/vic
       event: [push, tag, deployment]
       branch: ['refs/tags/*']
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 
   pass-rate:
     image: 'wdc-harbor-ci.eng.vmware.com/default-project/vic-integration-test:1.48'
@@ -364,3 +456,5 @@ pipeline:
     commands:
       - tests/pass-rate.sh
 
+=======
+>>>>>>> Drone 0.8 and HaaS updates (#7364)

@@ -19,7 +19,11 @@ secretsfile=""
 docker_test="Group1-Docker-Commands"
 target_vch=""
 odir="ci-results"
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 ci_container="gcr.io/eminent-nation-87317/vic-integration-test:1.48"
+=======
+ci_container="gcr.io/eminent-nation-87317/vic-integration-test:1.44"
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
 github_api_key=""
 test_url=""
 test_datastore=""

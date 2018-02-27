@@ -166,7 +166,12 @@ Container on Open Network And Port Forwarding Persist After Reboot
     Log  ${out}
 =======
     ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'ESXi'  Run  govc host.portgroup.add -vswitch vSwitchLAN open-net
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 >>>>>>> Correct ps output after network connect
+=======
+    ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Add VC Distributed Portgroup  test-ds  open-net
+    Log  ${out}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
 
     Install VIC Appliance To Test Server  additional-args=--container-network=open-net --container-network-firewall=open-net:open
 
@@ -209,6 +214,7 @@ Container on Open Network And Port Forwarding Persist After Reboot
     Should Not Be Equal As Integers  ${rc1}  0
     Should Not Be Equal As Integers  ${rc2}  0
 
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 <<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
     Log To Console  Cleanup Port Groups For Container network
     ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'ESXi'  Run  govc host.portgroup.remove open-net
@@ -216,6 +222,12 @@ Container on Open Network And Port Forwarding Persist After Reboot
     Log  ${out}
 =======
 >>>>>>> Correct ps output after network connect
+=======
+    Log To Console  Cleanup Port Groups For Container network
+    ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'ESXi'  Run  govc host.portgroup.remove open-net
+    ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'VC'  Remove VC Distributed Portgroup  open-net
+    Log ${out}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
 
 Create VCH attach disk and reboot
     ${rc}=  Run And Return Rc  govc vm.disk.create -vm=%{VCH-NAME} -name=%{VCH-NAME}/deleteme -size "16M"

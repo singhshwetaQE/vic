@@ -24,8 +24,8 @@ Set Test Environment Variables
     Run Keyword If  '${status}' == 'FAIL'  Set Environment Variable  PUBLIC_NETWORK  'VM Network'
     ${status}  ${message}=  Run Keyword And Ignore Error  Environment Variable Should Be Set  TEST_DATACENTER
     Run Keyword If  '${status}' == 'FAIL'  Set Environment Variable  TEST_DATACENTER  ${SPACE}
-    ${status}  ${message}=  Run Keyword And Ignore Error  Environment Variable Should Be Set  DRONE_MACHINE
-    Run Keyword If  '${status}' == 'FAIL'  Set Environment Variable  DRONE_MACHINE  'local'
+    ${status}  ${message}=  Run Keyword And Ignore Error  Environment Variable Should Be Set  DRONE_HOSTNAME
+    Run Keyword If  '${status}' == 'FAIL'  Set Environment Variable  DRONE_HOSTNAME  'local'
 
     @{URLs}=  Split String  %{TEST_URL_ARRAY}
     ${len}=  Get Length  ${URLs}
@@ -46,10 +46,14 @@ Set Test Environment Variables
     Should Be Equal As Integers  ${rc}  0
     Set Environment Variable  TEST_THUMBPRINT  ${thumbprint}
     Log To Console  \nTEST_URL=%{TEST_URL}
-    Log To Console  \nDRONE_MACHINE=%{DRONE_MACHINE}
+    Log To Console  \nDRONE_HOSTNAME=%{DRONE_HOSTNAME}
     ${worker_date}=  Run  date
     Log To Console  \nWorker_Date=${worker_date}
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 
+=======
+    
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     ${rc}  ${host}=  Run And Return Rc And Output  govc ls host
     Should Be Equal As Integers  ${rc}  0
     ${out}=  Run  govc ls -t HostSystem ${host} | xargs -I% -n1 govc host.date.info -host\=% | grep 'date and time'
@@ -348,6 +352,7 @@ Install VIC Appliance To Test Server With Current Environment Variables
 Run VIC Machine Command
     [Tags]  secret
     [Arguments]  ${vic-machine}  ${appliance-iso}  ${bootstrap-iso}  ${certs}  ${vol}  ${debug}  ${additional-args}
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 <<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
 <<<<<<< 47ad99a210ffdadb4c716acbedd0d48177182090
     ${output}=  Run Keyword If  ${certs}  Run  ${vic-machine} create --debug ${debug} --name=%{VCH-NAME} --target=%{TEST_URL}%{TEST_DATACENTER} --thumbprint=%{TEST_THUMBPRINT} --user=%{TEST_USERNAME} --image-store=%{TEST_DATASTORE} --appliance-iso=${appliance-iso} --bootstrap-iso=${bootstrap-iso} --password=%{TEST_PASSWORD} --force=true --bridge-network=%{BRIDGE_NETWORK} --public-network=%{PUBLIC_NETWORK} --compute-resource=%{TEST_RESOURCE} --timeout %{TEST_TIMEOUT} --insecure-registry wdc-harbor-ci.eng.vmware.com --volume-store=%{TEST_DATASTORE}/%{VCH-NAME}-VOL:${vol} --container-network=%{PUBLIC_NETWORK}:public ${vicmachinetls} ${additional-args}
@@ -369,6 +374,13 @@ Run VIC Machine Command
 
     ${output}=  Run Keyword Unless  ${certs}  Run  ${vic-machine} create --debug ${debug} --name=%{VCH-NAME} --target=%{TEST_URL}%{TEST_DATACENTER} --thumbprint=%{TEST_THUMBPRINT} --user=%{TEST_USERNAME} --image-store=%{TEST_DATASTORE} --appliance-iso=${appliance-iso} --bootstrap-iso=${bootstrap-iso} --password=%{TEST_PASSWORD} --force=true --bridge-network=%{BRIDGE_NETWORK} --public-network=%{PUBLIC_NETWORK} --compute-resource=%{TEST_RESOURCE} --timeout %{TEST_TIMEOUT} --insecure-registry harbor.ci.drone.local --volume-store=%{TEST_DATASTORE}/%{VCH-NAME}-VOL:${vol} --container-network=%{PUBLIC_NETWORK}:public --no-tlsverify ${additional-args}
 >>>>>>> Fix DHCP and IP reporting for container networks
+=======
+    ${output}=  Run Keyword If  ${certs}  Run  ${vic-machine} create --debug ${debug} --name=%{VCH-NAME} --target=%{TEST_URL}%{TEST_DATACENTER} --thumbprint=%{TEST_THUMBPRINT} --user=%{TEST_USERNAME} --image-store=%{TEST_DATASTORE} --appliance-iso=${appliance-iso} --bootstrap-iso=${bootstrap-iso} --password=%{TEST_PASSWORD} --force=true --bridge-network=%{BRIDGE_NETWORK} --public-network=%{PUBLIC_NETWORK} --compute-resource=%{TEST_RESOURCE} --timeout %{TEST_TIMEOUT} --insecure-registry wdc-harbor-ci.eng.vmware.com --volume-store=%{TEST_DATASTORE}/%{VCH-NAME}-VOL:${vol} --container-network=%{PUBLIC_NETWORK}:public ${vicmachinetls} ${additional-args}
+    Run Keyword If  ${certs}  Should Contain  ${output}  Installer completed successfully
+    Return From Keyword If  ${certs}  ${output}
+
+    ${output}=  Run Keyword Unless  ${certs}  Run  ${vic-machine} create --debug ${debug} --name=%{VCH-NAME} --target=%{TEST_URL}%{TEST_DATACENTER} --thumbprint=%{TEST_THUMBPRINT} --user=%{TEST_USERNAME} --image-store=%{TEST_DATASTORE} --appliance-iso=${appliance-iso} --bootstrap-iso=${bootstrap-iso} --password=%{TEST_PASSWORD} --force=true --bridge-network=%{BRIDGE_NETWORK} --public-network=%{PUBLIC_NETWORK} --compute-resource=%{TEST_RESOURCE} --timeout %{TEST_TIMEOUT} --insecure-registry wdc-harbor-ci.eng.vmware.com --volume-store=%{TEST_DATASTORE}/%{VCH-NAME}-VOL:${vol} --container-network=%{PUBLIC_NETWORK}:public --no-tlsverify ${additional-args}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     Run Keyword Unless  ${certs}  Should Contain  ${output}  Installer completed successfully
     [Return]  ${output}
 
@@ -388,8 +400,12 @@ Run Secret VIC Machine Inspect Command
 Run VIC Machine Delete Command
     ${rc}  ${output}=  Run Secret VIC Machine Delete Command  %{VCH-NAME}
     Log  ${output}
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     ${status}=  Run Keyword And Return Status  Wait Until Keyword Succeeds  6x  5s  Check Delete Success  %{VCH-NAME}
     Assert  ${status}  vic-machine delete failed to remove %{VCH-NAME}
+=======
+    Wait Until Keyword Succeeds  6x  5s  Check Delete Success  %{VCH-NAME}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     Should Be Equal As Integers  ${rc}  0
     Should Contain  ${output}  Completed successfully
     ${output}=  Run  rm -rf %{VCH-NAME}
@@ -458,9 +474,18 @@ Curl Container Logs
 Secret Curl Container Logs
     [Tags]  secret
     [Arguments]  ${name-suffix}=${EMPTY}
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     ${out1}=  Run  curl -k -D vic-admin-cookies -Fusername=%{TEST_USERNAME} -Fpassword=%{TEST_PASSWORD} %{VIC-ADMIN}/authentication
     ${out2}=  Run  curl -k -b vic-admin-cookies %{VIC-ADMIN}/container-logs.zip -o ${SUITE NAME}-%{VCH-NAME}-container-logs${name-suffix}.zip
     ${out3}=  Run  curl -k -b vic-admin-cookies %{VIC-ADMIN}/logs/port-layer.log
+=======
+    ${out}=  Run  curl -k -D vic-admin-cookies -Fusername=%{TEST_USERNAME} -Fpassword=%{TEST_PASSWORD} %{VIC-ADMIN}/authentication
+    Log  ${out}
+    ${out}=  Run  curl -k -b vic-admin-cookies %{VIC-ADMIN}/container-logs.zip -o ${SUITE NAME}-%{VCH-NAME}-container-logs${name-suffix}.zip
+    Log  ${out}
+    ${out}=  Run  curl -k -b vic-admin-cookies %{VIC-ADMIN}/logs/port-layer.log
+    Should Not Contain  ${out}  SIGSEGV: segmentation violation
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     Remove File  vic-admin-cookies
     [Return]  ${out1}  ${out2}  ${out3}
 
@@ -514,7 +539,11 @@ Cleanup VIC Appliance On Test Server
     Log To Console  Deleting the VCH appliance %{VCH-NAME}
     ${output}=  Run VIC Machine Delete Command
     Log  ${output}
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     Run Keyword If  %{DRONE_BUILD_NUMBER} != 0  Run Keyword And Ignore Error  Cleanup VCH Bridge Network
+=======
+    Run Keyword And Ignore Error  Cleanup VCH Bridge Network  %{VCH-NAME}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     Run Keyword And Ignore Error  Run  govc datastore.rm %{VCH-NAME}-VOL
     [Return]  ${output}
 
@@ -536,15 +565,23 @@ Add VC Distributed Portgroup
 
 Remove VC Distributed Portgroup
     [Arguments]  ${pg}
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
     ${out}=  Run  govc object.destroy network/${pg}
+=======
+    ${out}=  Run  govc object.destroy %{TEST_DATACENTER}/network/${pg}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     Log  ${out}
 
 Cleanup Datastore On Test Server
     ${out}=  Run  govc datastore.ls
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 <<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Log  ${out}
 =======
 >>>>>>> Optimize Docker Command tests to one VCH (#6481)
+=======
+    Log  ${out}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     ${exceptions}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
     ${items}=  Split To Lines  ${out}
     :FOR  ${item}  IN  @{items}
@@ -565,10 +602,14 @@ Cleanup Datastore On Test Server
 
 Cleanup Dangling VMs On Test Server
     ${out}=  Run  govc ls vm
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 <<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Log  ${out}
 =======
 >>>>>>> Optimize Docker Command tests to one VCH (#6481)
+=======
+    Log  ${out}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     ${exceptions}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
     ${vms}=  Split To Lines  ${out}
     :FOR  ${vm}  IN  @{vms}
@@ -588,10 +629,14 @@ Cleanup Dangling VMs On Test Server
 
 Cleanup Dangling Resource Pools On Test Server
     ${out}=  Run  govc ls host/*/Resources/*
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 <<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Log  ${out}
 =======
 >>>>>>> Optimize Docker Command tests to one VCH (#6481)
+=======
+    Log  ${out}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     ${exceptions}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
     ${pools}=  Split To Lines  ${out}
     :FOR  ${pool}  IN  @{pools}
@@ -611,10 +656,14 @@ Cleanup Dangling Resource Pools On Test Server
 
 Cleanup Dangling Networks On Test Server
     ${out}=  Run  govc ls network
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 <<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Log  ${out}
 =======
 >>>>>>> Optimize Docker Command tests to one VCH (#6481)
+=======
+    Log  ${out}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     ${exceptions}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
     ${nets}=  Split To Lines  ${out}
     :FOR  ${net}  IN  @{nets}
@@ -641,10 +690,14 @@ Cleanup Dangling Networks On Test Server
 
 Cleanup Dangling vSwitches On Test Server
     ${out}=  Run Keyword If  '%{HOST_TYPE}' == 'ESXi'  Run  govc host.vswitch.info | grep VCH
+<<<<<<< 8788bf56ef12eb56141c1b92de5230cfca0a3a8f
 <<<<<<< 48e341b357c4ebfb97025f2531bda866a6553e08
     Log  ${out}
 =======
 >>>>>>> Optimize Docker Command tests to one VCH (#6481)
+=======
+    Log  ${out}
+>>>>>>> Drone 0.8 and HaaS updates (#7364)
     ${exceptions}=  Get Environment Variable  VM_EXCEPTIONS  ${EMPTY}
     ${nets}=  Split To Lines  ${out}
     :FOR  ${net}  IN  @{nets}
