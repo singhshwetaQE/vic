@@ -47,10 +47,13 @@ import (
 	plscopes "github.com/vmware/vic/lib/apiservers/portlayer/client/scopes"
 	"github.com/vmware/vic/lib/apiservers/portlayer/models"
 	plmodels "github.com/vmware/vic/lib/apiservers/portlayer/models"
+<<<<<<< 01a04bc73dd368d76ae28d0f138d80ff2eb542da
 <<<<<<< d14b5abfb36b03fbf05ce7655a551d9f9c05d205
 =======
 	"github.com/vmware/vic/lib/archive"
 >>>>>>> Correct ps output after network connect
+=======
+>>>>>>> Refactored some proxy code to reuse with wolfpack (#7261)
 	"github.com/vmware/vic/lib/config/executor"
 	"github.com/vmware/vic/lib/metadata"
 	"github.com/vmware/vic/pkg/trace"
@@ -806,6 +809,7 @@ func TestPortInformation(t *testing.T) {
 	co.Name = "bar"
 	cache.ContainerCache().AddContainer(co)
 
+<<<<<<< 01a04bc73dd368d76ae28d0f138d80ff2eb542da
 <<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
 	// unless there are entries in vicnetwork.ContainerByPort we won't report them as bound
 	ports := network.PortForwardingInformation(nil, ips)
@@ -828,19 +832,27 @@ func TestPortInformation(t *testing.T) {
 =======
 	// unless there are entries in containerByPort we won't report them as bound
 	ports := portForwardingInformation(mockContainerInfo, ips)
+=======
+	// unless there are entries in vicnetwork.ContainerByPort we won't report them as bound
+	ports := network.PortForwardingInformation(co, ips)
+>>>>>>> Refactored some proxy code to reuse with wolfpack (#7261)
 	assert.Empty(t, ports, "There should be no bound IPs at this point for forwarding")
 
 	// the current port binding should show up as a direct port
-	ports = directPortInformation(mockContainerInfo)
+	ports = network.DirectPortInformation(mockContainerInfo)
 	assert.NotEmpty(t, ports, "There should be a direct port")
 
-	containerByPort["8000"] = containerID
-	ports = portForwardingInformation(mockContainerInfo, ips)
+	network.ContainerByPort["8000"] = containerID
+	ports = network.PortForwardingInformation(co, ips)
 	assert.NotEmpty(t, ports, "There should be bound IPs")
 	assert.Equal(t, 1, len(ports), "Expected 1 port binding, found %d", len(ports))
 	// now that this port presents as a forwarded port it should NOT present as a direct port
+<<<<<<< 01a04bc73dd368d76ae28d0f138d80ff2eb542da
 	ports = directPortInformation(mockContainerInfo)
 >>>>>>> Fix DHCP and IP reporting for container networks
+=======
+	ports = network.DirectPortInformation(mockContainerInfo)
+>>>>>>> Refactored some proxy code to reuse with wolfpack (#7261)
 	assert.Empty(t, ports, "There should not be a direct port")
 
 	port, _ = nat.NewPort("tcp", "80")
@@ -852,6 +864,7 @@ func TestPortInformation(t *testing.T) {
 
 	// forwarding of 00 should never happen, but this is allowing us to confirm that
 	// it's kicked out by the function even if present in the map
+<<<<<<< 01a04bc73dd368d76ae28d0f138d80ff2eb542da
 <<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
 	network.ContainerByPort["00"] = containerID
 	ports = network.PortForwardingInformation(co, ips)
@@ -859,6 +872,10 @@ func TestPortInformation(t *testing.T) {
 	containerByPort["00"] = containerID
 	ports = portForwardingInformation(mockContainerInfo, ips)
 >>>>>>> Fix DHCP and IP reporting for container networks
+=======
+	network.ContainerByPort["00"] = containerID
+	ports = network.PortForwardingInformation(co, ips)
+>>>>>>> Refactored some proxy code to reuse with wolfpack (#7261)
 	assert.NotEmpty(t, ports, "There should be 1 bound IP")
 	assert.Equal(t, 1, len(ports), "Expected 1 port binding, found %d", len(ports))
 
@@ -868,6 +885,7 @@ func TestPortInformation(t *testing.T) {
 		HostPort: "800",
 	}
 	portMap[port] = portBindings
+<<<<<<< 01a04bc73dd368d76ae28d0f138d80ff2eb542da
 <<<<<<< 1b361d7b10429a75d3fa7ec622cc19d885d95a61
 	network.ContainerByPort["800"] = containerID
 	ports = network.PortForwardingInformation(co, ips)
@@ -875,6 +893,10 @@ func TestPortInformation(t *testing.T) {
 	containerByPort["800"] = containerID
 	ports = portForwardingInformation(mockContainerInfo, ips)
 >>>>>>> Fix DHCP and IP reporting for container networks
+=======
+	network.ContainerByPort["800"] = containerID
+	ports = network.PortForwardingInformation(co, ips)
+>>>>>>> Refactored some proxy code to reuse with wolfpack (#7261)
 	assert.Equal(t, 2, len(ports), "Expected 2 port binding, found %d", len(ports))
 }
 

@@ -564,7 +564,11 @@ func PortForwardingInformation(vc *viccontainer.VicContainer, ips []string) []ty
 	//c := cache.ContainerCache().GetContainer(cid)
 
 	if vc == nil {
+<<<<<<< 01a04bc73dd368d76ae28d0f138d80ff2eb542da
 		log.Errorf("No container provided")
+=======
+		log.Errorf("Could not find container with ID %s", vc.ContainerID)
+>>>>>>> Refactored some proxy code to reuse with wolfpack (#7261)
 		return nil
 	}
 

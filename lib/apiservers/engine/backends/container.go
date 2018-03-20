@@ -57,7 +57,6 @@ import (
 	"github.com/vmware/vic/lib/apiservers/portlayer/client/scopes"
 	"github.com/vmware/vic/lib/apiservers/portlayer/models"
 	"github.com/vmware/vic/lib/archive"
-	"github.com/vmware/vic/lib/config/executor"
 	"github.com/vmware/vic/lib/constants"
 	"github.com/vmware/vic/lib/metadata"
 	"github.com/vmware/vic/pkg/errors"
@@ -1403,11 +1402,15 @@ payloadLoop:
 				ips = []string{""}
 			}
 			c := cache.ContainerCache().GetContainer(t.ContainerConfig.ContainerID)
+<<<<<<< 01a04bc73dd368d76ae28d0f138d80ff2eb542da
 			if c != nil {
 				ports = append(ports, network.PortForwardingInformation(c, ips)...)
 			} else {
 				log.Warningf("Container is not found in cache: %s", t.ContainerConfig.ContainerID)
 			}
+=======
+			ports = append(ports, network.PortForwardingInformation(c, ips)...)
+>>>>>>> Refactored some proxy code to reuse with wolfpack (#7261)
 		}
 
 		// verify that the repo:tag exists for the container -- if it doesn't then we should present the
