@@ -28,12 +28,12 @@ Setup
 
 
 Teardown
-    Cleanup VIC Appliance On Test Server
     Terminate All Processes    kill=True
 
 
 Get VCH List
     Get Path Under Target    vch
+
 
 
 Get VCH List Within Datacenter
@@ -111,3 +111,18 @@ Get VCH List Within Invalid Datacenter and Compute Resource
 
     Verify Return Code
     Verify Status Not Found
+
+
+    [Teardown]   Run Secret VIC Machine Delete Command   %{VCH-NAME}
+
+Empty VCH list returned
+    Get VCH List
+
+    Verify Return Code
+    Verify Status Ok
+
+    Get VCH ID    %{VCH-NAME}
+    
+    Output Should Not Contain  .vchs[] | select(.name=="%{VCH-NAME}").admin_portal
+    Output Should Not Contain  .vchs[] | select(.name=="%{VCH-NAME}").id
+    Output Should Not Contain  .vchs[] | select(.name=="%{VCH-NAME}").docker_host
